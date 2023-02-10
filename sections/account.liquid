@@ -1,0 +1,48 @@
+<h1>Account Information</h1>
+
+<p>
+  Name: {{ customer.first_name }} {{ customer.last_name }}<br>
+  Email: {{ customer.email }}<br>
+  Phone: {{ customer.phone }}
+</p>
+
+<h2>Shipping Address</h2>
+
+{% if customer.default_address %}
+  {{ customer.default_address | default_customer_address }}
+{% else %}
+  <p>No shipping address on file.</p>
+{% endif %}
+
+<h2>Billing Address</h2>
+
+{% if customer.default_address %}
+  {{ customer.default_address | default_customer_address }}
+{% else %}
+  <p>No billing address on file.</p>
+{% endif %}
+
+<h2>Order History</h2>
+
+{% for order in customer.orders %}
+  <p>
+    Date: {{ order.created_at | date: "%B %d, %Y" }}<br>
+    Order Number: {{ order.name }}<br>
+    Total: {{ order.total_price | money }}
+  </p>
+{% endfor %}
+
+<h2>Wish List</h2>
+
+{% if customer.wishlists.size > 0 %}
+  {% for wishlist in customer.wishlists %}
+    <h3>{{ wishlist.name }}</h3>
+    <ul>
+      {% for item in wishlist.line_items %}
+        <li>{{ item.product.title }}</li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+{% else %}
+  <p>No items in wish list.</p>
+{% endif %}

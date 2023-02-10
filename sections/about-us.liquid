@@ -1,0 +1,139 @@
+<section class="about">
+  <div class="container">
+    <div class="row d-flex flex-column-reverse flex-md-row">
+      <div class="col-12 col-lg-4 left-side">
+        <div class="inner">
+          <h3>{{section.settings.title}}</h3>
+
+          <div class="check-marks">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'text-line' %}
+                  <div class="check-mark">
+                    <i class="fal fa-check-circle"></i>
+                    <p>{{block.settings.line}}</p>
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <a href="{{section.settings.button-url}}" class="btn-green">{{section.settings.button-label}}</a>
+      </div>
+
+      <div class="col-12 col-lg-8 right-side">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'text-block' %}
+              <div class="text">
+                <h3 class="d-none d-md-block">{{block.settings.block-title}}</h3>
+                <div>{{block.settings.block-description}}</div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+        <div class="text">
+          <h3>{{section.settings.bottom-title}}</h3>
+          <div>{{section.settings.bottom-description}}</div>
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'bottom-products' %}
+                {% assign collection = block.settings.collection %}
+                <h4>
+                  <a href="{{collection.url}}">{{collection.title}}</a>
+                </h4>
+                <ul>
+                  {% for collection in block.settings.collection_list %}
+                    <li>
+                      <a href="{{collection.url}}">{{collection.title}}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "About us",
+    "class": "section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "button-label",
+        "label": "Button Label"
+      },
+      {
+        "type": "url",
+        "id": "button-url",
+        "label": "Button Url"
+      },
+      {
+        "type": "text",
+        "id": "bottom-title",
+        "label": "Bottom Title"
+      }, {
+        "type": "richtext",
+        "id": "bottom-description",
+        "label": "Bottom Description"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Text Line",
+        "type": "text-line",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "text",
+            "id": "line",
+            "label": "Text Line"
+          }
+        ]
+      }, {
+        "name": "Text Block",
+        "type": "text-block",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "text",
+            "id": "block-title",
+            "label": "Block Title"
+          }, {
+            "type": "richtext",
+            "id": "block-description",
+            "label": "Block Description"
+          }
+        ]
+      }, {
+        "name": "Bottom Products",
+        "type": "bottom-products",
+        "limit": 2,
+        "settings": [
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+          }, {
+            "type": "collection_list",
+            "id": "collection_list",
+            "label": "Collections"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "About Us"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,172 @@
+<div id="login-form" class="container">
+  <section class="breadcrumbs">
+    <div class="item-parent col-12 col-lg-6">
+      <ul class="item-parent">
+        <li class="item">
+          <a href="{{routes.root_url}}">
+            <p>
+              <i class="fa fa-home"></i>
+            </p>
+          </a>
+        </li>
+        <li class="item">
+          <a href="/account">
+            <p>Account</p>
+          </a>
+        </li>
+        <li class="item">
+          <a href="/account/login">
+            <p>Inloggen</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible">
+      <i class="fa fa-exclamation-circle"></i>
+      {{ form.errors | default_errors }}</div>
+  {% endif %}
+  <div class="row">
+    <div id="content" class="col-sm-12">
+      <div class="row">
+        <div class="col col-md-6">
+          <div class="well">
+            <h2>Nieuwe klant</h2>
+            <p>
+              <strong>Registreren</strong>
+            </p>
+            <p>Door een account aan te maken kunt u sneller en makkelijker bestellen. Daarnaast kunt u uw eerdere en huidige bestellingen eenvoudig bekijken.</p>
+            <a href="/account/register" class="btn-green mt-4">Registreer mijn account</a>
+          </div>
+        </div>
+        <div class="col col-md-6">
+          <div class="well">
+            <h2>Bestaande klant</h2>
+            {% form 'customer_login' %}
+              <div class="form-group">
+                <label class="control-label" for="email_address">Email</label>
+                <input
+                  class="form-control"
+                  type="email"
+                  name="customer[email]"
+                  id="email_address"
+                  autocomplete="email"
+                  placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="password">Password</label>
+                <input
+                  class="form-control"
+                  type="password"
+                  name="customer[password]"
+                  id="password"
+                  autocomplete="current-password"
+                  placeholder="Password">
+                <a href="javascript:void(0)" onclick="toggleRecoverPasswordForm()">Wachtwoord vergeten</a>
+              </div>
+              <button type="submit" class="btn-green">INLOGGEN</button>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="account-forgotten" class="container">
+  <section class="breadcrumbs">
+    <div class="item-parent col-12 col-lg-6">
+      <ul class="item-parent">
+        <li class="item">
+          <a href="https://www.rephone.nl/index.php?route=common/home">
+            <p>
+              <i class="fa fa-home"></i>
+            </p>
+          </a>
+        </li>
+        <li class="item">
+          <a href="https://www.rephone.nl/index.php?route=account/account">
+            <p>Account</p>
+          </a>
+        </li>
+        <li class="item">
+          <a href="https://www.rephone.nl/index.php?route=account/forgotten">
+            <p>Wachtwoord vergeten</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <div
+    class="row"
+    id="recover-password-form"
+    style="display: none;">
+    <div class="col-sm-9">
+      <h1>Account</h1>
+      <p>Bent u uw wachtwoord vergeten? Vul dan hieronder het e-mailadres in wat aan uw account gekoppeld is. Klik vervolgens op
+        <b>Verder</b>
+        en u ontvangt van ons een nieuw wachtwoord.</p>
+      {% form 'recover_customer_password' %}
+        <fieldset>
+          <legend>Uw e-mailadres</legend>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="customer_email">Email</label>
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="email"
+                name="email"
+                id="customer_email"
+                autocomplete="email"
+                placeholder="Email address">
+            </div>
+          </div>
+        </fieldset>
+        <div class="buttons clearfix">
+          <div class="pull-left">
+            <a
+              href="javascript:void(0)"
+              onclick="toggleRecoverPasswordForm()"
+              class="btn btn-default">Terug</a>
+          </div>
+          <div class="pull-right">
+            <input
+              type="submit"
+              value="Verder"
+              class="btn btn-primary">
+          </div>
+        </div>
+      {% endform %}
+    </div>
+    <aside id="column-right" class="col-sm-3 hidden-xs">
+      <div class="list-group">
+        <a href="/account/login" class="list-group-item">Inloggen</a>
+        <a href="/account/register" class="list-group-item">Registreer</a>
+        <a
+          href="javascript:void(0)"
+          onclick="toggleRecoverPasswordForm()"
+          class="list-group-item">Wachtwoord vergeten</a>
+        <a href="/account" class="list-group-item">Mijn Account</a>
+        <a href="/account" class="list-group-item">Adresboek</a>
+        <a href="/account" class="list-group-item">Bestelhistorie</a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  function toggleRecoverPasswordForm() {
+    const loginForm = document.getElementById("login-form");
+    const recoverForm = document.getElementById("recover-password-form");
+    if (recoverForm.style.display === "none") {
+      recoverForm.style.display = "flex";
+      loginForm.style.display = "none";
+    } else {
+      recoverForm.style.display = "none";
+      loginForm.style.display = "flex";
+    }
+  }
+</script>
